@@ -1,0 +1,7 @@
+chromadb ~= 0.5.23
+ipykernel ~= 6.29.5
+langchain_core ~= 0.3.22
+langchain_community ~= 0.3.10
+ollama ~= 0.4.4
+PyPDF2 ~= 3.0.1
+streamlit ~= 1.40.2
