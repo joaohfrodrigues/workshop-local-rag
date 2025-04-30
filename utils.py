@@ -59,21 +59,30 @@ def load_data_setup_collection():
         )
     return collection
 
-def get_embedding_data(collection, prompt: str, n_results=20):
-  """Get embedding data from the prompt
+def get_embedding_data(collection, prompt: str, n_results=20, min_distance=300):
+    """Get embedding data from the prompt
 
-  Args:
-      promtp (str): The prompt to get the embedding data from
+    Args:
+        prompt (str): The prompt to get the embedding data from
 
-  Returns:
-      List[List[Document]] : The embedding data
-  """
-  response = ollama.embeddings(
+    Returns:
+        List[List[Document]] : The embedding data
+    """
+    response = ollama.embeddings(
     prompt=prompt,
     model="mxbai-embed-large"
-  )
-  results = collection.query(
+    )
+    results = collection.query(
     query_embeddings=[response["embedding"]],
     n_results=n_results
-  )
-  return results['documents']
+    )
+
+    # Filter out results with distance less than min_distance
+    results['documents'] = [
+        doc for doc, distance in zip(results['documents'][0], results['distances'][0]) if distance < min_distance
+    ]
+    # If no results are found, return an empty list
+    if not results['documents']:
+        return []
+    # If results are found, return the documents
+    return results['documents']
