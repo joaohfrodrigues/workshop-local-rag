@@ -62,6 +62,7 @@ Follow the guidelines in local_rag.ipynb.
 - Explore extending the RAG pipeline with custom data.
 - Experiment with different prompting techniques.
 - Try to pump the performance by using cloud models.
+- Interpret the prompt and enable different actions turning your assistant into an agent.
 
 ## References
 
